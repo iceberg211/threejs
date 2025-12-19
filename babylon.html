@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babylon.js Gesture Christmas Tree</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background: #000;
+        }
+
+        #renderCanvas {
+            width: 100vw;
+            height: 100vh;
+            touch-action: none;
+            outline: none;
+        }
+
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: sans-serif;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .back-link {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: sans-serif;
+            pointer-events: auto;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="info">
+        <h3>🎄 Gesture Controlled Tree</h3>
+        <p>👋 <b>Open Hand</b>: Rotate Camera</p>
+        <p>🤏 <b>Pinch</b>: Change Star Color</p>
+        <p><i>Ensure Camera permission is granted!</i></p>
+    </div>
+    <a href="index.html" class="back-link">⬅ Back to Three.js Demo</a>
+    <script type="module" src="/src/main_babylon.js"></script>
+</body>
+
+</html>

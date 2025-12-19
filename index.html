@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +11,17 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             overflow: hidden;
             font-family: Arial, sans-serif;
         }
+
         #canvas-container {
             width: 100vw;
             height: 100vh;
         }
+
         #info {
             position: absolute;
             top: 10px;
@@ -28,8 +32,27 @@
             border-radius: 5px;
             font-size: 14px;
         }
+
+        .nav-link {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            background: linear-gradient(45deg, #ff0040, #0040ff);
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .nav-link:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
+
 <body>
     <div id="info">
         <h3>Three.js 丰富场景示例</h3>
@@ -37,7 +60,9 @@
         <p>🔍 滚轮：缩放场景</p>
         <p>📦 场景包含：多种几何体、材质、纹理、粒子效果</p>
     </div>
+    <a href="babylon.html" class="nav-link">✨ Go to Gesture & Babylon Tree 🎄</a>
     <div id="canvas-container"></div>
     <script type="module" src="/src/main.js"></script>
 </body>
+
 </html>
