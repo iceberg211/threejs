@@ -19,9 +19,47 @@ export async function createScene(canvas) {
 
     // Glow Layer for magical effect
     const glowLayer = new BABYLON.GlowLayer("glow", scene);
-    glowLayer.intensity = 0.6;
+    glowLayer.intensity = 1.2; // Boost glow
 
-    // --- Particle Tree Implementation ---
+    // --- Interactive Elements ---
+
+    // 1. 3D Hand Cursor
+    // We'll project the 2D hand position onto a plane in front of the camera
+    const cursor = BABYLON.MeshBuilder.CreateSphere("cursor", { diameter: 0.3 }, scene);
+    const cursorMat = new BABYLON.StandardMaterial("cursorMat", scene);
+    cursorMat.emissiveColor = new BABYLON.Color3(0, 1, 1); // Cyan glow
+    cursorMat.disableLighting = true;
+    cursor.material = cursorMat;
+    cursor.position.z = 5; // Fixed depth for now
+    cursor.isVisible = false; // Hidden until hand detected
+
+    // 2. Firework System Helper
+    const createFirework = (position, color) => {
+        const fireworkSystem = new BABYLON.ParticleSystem("firework", 100, scene);
+        fireworkSystem.particleTexture = new BABYLON.Texture("https://assets.babylonjs.com/textures/flare.png", scene);
+        fireworkSystem.emitter = position;
+        fireworkSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+        fireworkSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
+
+        fireworkSystem.color1 = color;
+        fireworkSystem.color2 = new BABYLON.Color4(1, 1, 1, 1);
+        fireworkSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0);
+
+        fireworkSystem.minSize = 0.2;
+        fireworkSystem.maxSize = 0.5;
+        fireworkSystem.minLifeTime = 0.5;
+        fireworkSystem.maxLifeTime = 1.0;
+        fireworkSystem.emitRate = 1000;
+        fireworkSystem.burst(100); // One shot burst
+        fireworkSystem.minEmitPower = 5;
+        fireworkSystem.maxEmitPower = 10;
+        fireworkSystem.updateSpeed = 0.01;
+
+        // Manual dispose after animation
+        setTimeout(() => {
+            fireworkSystem.dispose();
+        }, 1500);
+    };
 
     // Create a particle system
     const particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);

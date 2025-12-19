@@ -32,13 +32,21 @@ export async function initializeGestures(onGesture) {
             const distance = Math.hypot(indexTip.x - thumbTip.x, indexTip.y - thumbTip.y);
             const isPinching = distance < 0.05;
 
-            // Call callback with normalized data
+            // Call callback with enhanced data
             // MediaPipe x is 0(left) to 1(right). 
-            // We flip x if using selfie camera mirroring, but usually raw output matches visual if not mirrored.
-            // Let's assumes 0-1.
+            const x = 1 - indexTip.x; // Flip for mirror effect
+            const y = indexTip.y;
+
+            // "Joystick" logic: value from -1 (left) to 1 (right)
+            // Deadzone in the middle (0.4 - 0.6)
+            let rotationSpeed = 0;
+            if (x < 0.4) rotationSpeed = (x - 0.4) * 2; // -0.8 to 0
+            if (x > 0.6) rotationSpeed = (x - 0.6) * 2; // 0 to 0.8
+
             onGesture({
-                x: 1 - indexTip.x, // Flip X for intuitive mirror control
-                y: indexTip.y,
+                cursor: { x, y }, // Raw 0-1 position for UI cursor
+                rotationSpeed: rotationSpeed, // -1 to 1 control value
+                pinch: isPinching,
                 gestureType: isPinching ? 'Pinch' : 'Open'
             });
         }
